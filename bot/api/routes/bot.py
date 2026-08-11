@@ -24,6 +24,7 @@ if TYPE_CHECKING:
 
 router = APIRouter()
 
+@router.head("/status")
 @router.get("/status", response_model=BotStatus, summary="Get bot status", description="Returns real-time health metrics, latency, and scale information.")
 async def get_status(bot: "zyrox" = Depends(get_bot)):
     """
