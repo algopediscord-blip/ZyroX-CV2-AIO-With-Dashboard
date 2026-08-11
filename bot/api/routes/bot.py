@@ -11,7 +11,8 @@
 # ║   github   ──  https://github.com/RayExo                        ║
 # ║                                                                  ║
 # ╚══════════════════════════════════════════════════════════════════╝
-
+import asyncio
+import aiohttp
 from fastapi import APIRouter, Depends
 from api.dependencies import get_bot
 from api.schemas import BotInfo, BotStatus
@@ -23,6 +24,22 @@ if TYPE_CHECKING:
     from core.zyrox import zyrox
 
 router = APIRouter()
+
+async def start_self_ping():
+    await asyncio.sleep(15)
+    url = "https://zyrox-cv2-aio-with-dashboard-3.onrender.com/status"
+    async with aiohttp.ClientSession() as session:
+        while True:
+            try:
+                async with session.get(url) as resp:
+                    print(f"[Auto-Ping] Estado: {resp.status}")
+            except Exception as e:
+                print(f"[Auto-Ping] Error: {e}")
+            await asyncio.sleep(300)
+
+@router.on_event("startup")
+async def on_startup():
+    asyncio.create_task(start_self_ping())
 
 @router.head("/status")
 @router.get("/status", response_model=BotStatus, summary="Get bot status", description="Returns real-time health metrics, latency, and scale information.")
