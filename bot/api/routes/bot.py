@@ -27,7 +27,7 @@ router = APIRouter()
 
 async def start_self_ping():
     await asyncio.sleep(15)
-    url = "https://zyrox-cv2-aio-with-dashboard-3.onrender.com/api/status"
+    url = "https://zyrox-cv2-aio-with-dashboard-3.onrender.com/api/v1/bot/status"
     async with aiohttp.ClientSession() as session:
         while True:
             try:
