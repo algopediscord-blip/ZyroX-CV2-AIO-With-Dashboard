@@ -27,7 +27,7 @@ router = APIRouter()
 
 async def start_self_ping():
     await asyncio.sleep(15)
-    url = "https://algope-bot-ycp9.onrender.com/docs"
+    url = "https://algope-bot-bb6a.onrender.com/docs"
     async with aiohttp.ClientSession() as session:
         while True:
             try:
